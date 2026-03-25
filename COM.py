@@ -3,6 +3,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+### The point of this code is to find the center of mass of a simulation in the
+### PLANET mode. This assumes that "Den" has been included in VARLIST (see your
+### .inp file). Rather than following specific tracers, this calulates the mass
+### from the density field of the simulation. This may produce values different
+### should this be calculated from "Trd". 
+
+### This is for 2D simulations with iSALE, which means that the COM will lie on
+### x = 0. This code calculates the volume of disks of the planet environment 
+### to find the y-component of the COM. Images are made for further clarity. 
+
 ast_input = open('../asteroid.inp', 'r')
 keywords = ['GRIDSPC', 'OBJRESH', 'R_PLANET']
 ast_dict = {}
@@ -29,12 +39,6 @@ model = psp.opendatfile('../Planet2D/jdata.dat')
 model.setScale('km')
 dirname = 'COM'
 psp.mkdir_p(dirname)
-
-### The point of this code is to find the center of mass of a simulation in the
-### PLANET mode. This assumes that "Den" has been included in VARLIST (see your
-### .inp file). Rather than following specific tracers, this calulates the mass
-### from the density field of the simulation. This may produce values different
-### should this be calculated from "Trd". 
 
 ### dx and dy is usually established in "TR_SPCH" and "TR_SPCV". However,
 ### material may move into the Low Resolution Zone, in which case these values 
